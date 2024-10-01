@@ -1,0 +1,23 @@
+version: "3.9"
+name: ${DOCKER_IMAGE_NAME}
+services:
+  apache-php-8.3:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      args:
+        xdebug_port: ${XDEBUG_PORT}
+        xdebug_mode: develop,debug
+        github_link: ${GITHUB_LINK}
+        server_name: ${SERVER_NAME}
+        server_port: ${SERVER_PORT}
+    environment:
+      - APACHE_LOG_DIR=/app
+      - server_name=${SERVER_NAME}
+      - github_link=${GITHUB_LINK}
+    ports:
+      - "${SERVER_PORT}:443"
+      - "${XDEBUG_PORT}:${XDEBUG_PORT}"
+      - 3000:3000
+    volumes:
+      - ./certs:/var/www/certs
