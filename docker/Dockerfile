@@ -56,8 +56,6 @@ RUN sed -i "s/((xdebug_mode))/${xdebug_mode}/g" /usr/local/etc/php/conf.d/docker
 
 SHELL ["/bin/bash", "-c"]
 
-ARG github_link
-
 # set environment variable
 ENV APACHE_DOCUMENT_ROOT /var/www/html
 
@@ -65,6 +63,14 @@ ENV APACHE_DOCUMENT_ROOT /var/www/html
 RUN chown -R www-data:www-data /var/www/html && find /var/www/html -type d -exec chmod 755 {} \; && find /var/www/html -type f -exec chmod 644 {} \;
 
 RUN a2ensite default-ssl
+
+# install Node
+RUN apt-get update && apt-get install -y software-properties-common npm
+RUN npm install npm@latest -g && npm install n -g && n latest
+
+# install Yarn
+RUN npm install --global yarn
+RUN yarn --version
 
 # Here we are introducing a custom entry point to run Laravel migrations
 COPY ./docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh

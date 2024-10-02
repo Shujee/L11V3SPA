@@ -61,6 +61,15 @@ if [ ! -f "$FLAG_FILE" ]; then
   # Run Laravel migrations
   php artisan migrate --seed
 
+  # update node packages of the front-end project
+  cd /var/www/html/client
+  yarn
+
+  sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.development
+  sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.development
+  sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.production
+  sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.production
+
   # Create the marker file to indicate first run is completed
   touch "$FLAG_FILE"
 else
