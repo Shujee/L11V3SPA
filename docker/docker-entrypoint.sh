@@ -72,7 +72,12 @@ if [ ! -f "$FLAG_FILE" ]; then
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.production
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.production
 
-#   yarn dev &
+  yarn dev & YARN_PID=$!
+
+  cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
+
+  # Kill the yarn dev process when needed
+  kill $YARN_PID
 
 # # Wait for the certificates to be created
 # CERT_DIR=/root/.vite-plugin-mkcert/  
@@ -84,7 +89,7 @@ if [ ! -f "$FLAG_FILE" ]; then
 #     echo "Certificates found. Proceeding with copy..."
     
 #     #copy Vite certificate to host machine
-#     cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
+
 #     # cp /root/.vite-plugin-mkcert/dev.pem /var/www/certs/dev.crt
 #     # cp /root/.vite-plugin-mkcert/cert.pem /var/www/certs/cert.crt
 
