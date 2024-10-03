@@ -65,19 +65,36 @@ if [ ! -f "$FLAG_FILE" ]; then
   cd /var/www/html/client
   yarn
 
-  sed -i "s/host: true/host: ${server_name}/g" /var/www/html/client/vite.config.mts
-
-  yarn dev
-
-  #copy Vite certificate to host machine
-  cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
-  cp /root/.vite-plugin-mkcert/dev.pem /var/www/certs/dev.crt
-  cp /root/.vite-plugin-mkcert/cert.pem /var/www/certs/cert.crt
-
+  sed -i "s/host: true/host: '${server_name}'/g" /var/www/html/client/vite.config.mts
+  
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.development
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.development
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.production
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.production
+
+  # yarn dev &
+
+  # # Wait for the certificates to be created
+  # CERT_DIR=/root/.vite-plugin-mkcert/  
+  # CERT_FILE="$CERT_DIR/rootCA.pem"
+
+  # # Wait for the certificate to be created (max 10 seconds)
+  # for i in {1..10}; do
+  #   if [ -f "$CERT_FILE" ]; then
+  #     echo "Certificates found. Proceeding with copy..."
+      
+      #copy Vite certificate to host machine
+      cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
+      # cp /root/.vite-plugin-mkcert/dev.pem /var/www/certs/dev.crt
+      # cp /root/.vite-plugin-mkcert/cert.pem /var/www/certs/cert.crt
+
+  #     break
+  #   fi
+
+  #   echo "Waiting for certificates to be created..."
+  #   sleep 1
+  # done
+
 
   # Create the marker file to indicate first run is completed
   touch "$FLAG_FILE"
@@ -93,3 +110,5 @@ fi
 
 # Now continue executing base image's entrypoint
 exec docker-php-entrypoint "$@"
+
+cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
