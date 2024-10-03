@@ -72,28 +72,28 @@ if [ ! -f "$FLAG_FILE" ]; then
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.production
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.production
 
-  yarn dev &
+#   yarn dev &
 
-  # Wait for the certificates to be created
-  CERT_DIR=/root/.vite-plugin-mkcert/  
-  CERT_FILE="$CERT_DIR/rootCA.pem"
+# # Wait for the certificates to be created
+# CERT_DIR=/root/.vite-plugin-mkcert/  
+# CERT_FILE="$CERT_DIR/rootCA.pem"
 
-  # Wait for the certificate to be created (max 10 seconds)
-  for i in {1..10}; do
-    if [ -f "$CERT_FILE" ]; then
-      echo "Certificates found. Proceeding with copy..."
-      
-      #copy Vite certificate to host machine
-      cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
-      # cp /root/.vite-plugin-mkcert/dev.pem /var/www/certs/dev.crt
-      # cp /root/.vite-plugin-mkcert/cert.pem /var/www/certs/cert.crt
+# # Wait for the certificate to be created (max 10 seconds)
+# for i in {1..10}; do
+#   if [ -f "$CERT_FILE" ]; then
+#     echo "Certificates found. Proceeding with copy..."
+    
+#     #copy Vite certificate to host machine
+#     cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
+#     # cp /root/.vite-plugin-mkcert/dev.pem /var/www/certs/dev.crt
+#     # cp /root/.vite-plugin-mkcert/cert.pem /var/www/certs/cert.crt
 
-      break
-    fi
+#     break
+#   fi
 
-    echo "Waiting for certificates to be created..."
-    sleep 1
-  done
+#   echo "Waiting for certificates to be created..."
+#   sleep 1
+# done
 
   # Create the marker file to indicate first run is completed
   touch "$FLAG_FILE"
