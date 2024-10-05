@@ -13,11 +13,11 @@ services:
         server_port: ${SERVER_PORT}
     environment:
       - APACHE_LOG_DIR=/app
+      - TZ=Asia/Karachi
       - server_name=${SERVER_NAME}
       - github_link=${GITHUB_LINK}
     ports:
       - "${SERVER_PORT}:443"
       - "${XDEBUG_PORT}:${XDEBUG_PORT}"
-      - 3000:3000
     volumes:
       - ./certs:/var/www/certs

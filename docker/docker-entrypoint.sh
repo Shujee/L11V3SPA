@@ -72,39 +72,51 @@ if [ ! -f "$FLAG_FILE" ]; then
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.production
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.production
 
-  yarn dev & YARN_PID=$!
+  # Step 1: Run Vite in the background
+  yarn dev &
+  VITE_PID=$!
 
-  cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
+  # Verify if VITE_PID is assigned correctly
+  if [ -z "$VITE_PID" ]; then
+    echo "Failed to start Vite or retrieve its PID."
+    exit 1
+  fi
 
-  # Kill the yarn dev process when needed
-  kill $YARN_PID
+  # Wait for the certificates to be created
+  CERT_DIR="/root/.vite-plugin-mkcert"
+  CERT_FILES=("rootCA.pem" "cert.pem")
 
-# # Wait for the certificates to be created
-# CERT_DIR=/root/.vite-plugin-mkcert/  
-# CERT_FILE="$CERT_DIR/rootCA.pem"
+  echo "Waiting for Vite to generate certificates..."
+  while true; do
+    all_files_exist=true
+    for cert_file in "${CERT_FILES[@]}"; do
+      if [ ! -f "$CERT_DIR/$cert_file" ]; then
+        all_files_exist=false
+        break
+      fi
+    done
 
-# # Wait for the certificate to be created (max 10 seconds)
-# for i in {1..10}; do
-#   if [ -f "$CERT_FILE" ]; then
-#     echo "Certificates found. Proceeding with copy..."
-    
-#     #copy Vite certificate to host machine
+    # If both certificates exist, break the loop
+    if [ "$all_files_exist" = true ]; then
+      echo "Certificates generated!"
 
-#     # cp /root/.vite-plugin-mkcert/dev.pem /var/www/certs/dev.crt
-#     # cp /root/.vite-plugin-mkcert/cert.pem /var/www/certs/cert.crt
+      #copy Vite certificate to host machine
+      cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
+      cp /root/.vite-plugin-mkcert/cert.pem /var/www/certs/cert.crt
+      echo "and copied!"
 
-#     break
-#   fi
+      break
+    fi
 
-#   echo "Waiting for certificates to be created..."
-#   sleep 1
-# done
-
+    # Sleep for a short interval before checking again
+    sleep 2
+  done
+  
   # Create the marker file to indicate first run is completed
   touch "$FLAG_FILE"
 else
   CUR_DIR=$(pwd)
-
+  
   cd /var/www/html
 
   git pull
