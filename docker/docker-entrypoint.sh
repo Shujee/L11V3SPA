@@ -84,7 +84,7 @@ if [ ! -f "$FLAG_FILE" ]; then
 
   # Wait for the certificates to be created
   CERT_DIR="/root/.vite-plugin-mkcert"
-  CERT_FILES=("rootCA.pem" "cert.pem")
+  CERT_FILES=("rootCA.pem")
 
   echo "Waiting for Vite to generate certificates..."
   while true; do
@@ -102,7 +102,6 @@ if [ ! -f "$FLAG_FILE" ]; then
 
       #copy Vite certificate to host machine
       cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
-      cp /root/.vite-plugin-mkcert/cert.pem /var/www/certs/cert.crt
       echo "and copied!"
 
       break
