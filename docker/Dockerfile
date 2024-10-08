@@ -29,9 +29,6 @@ RUN mkdir /etc/apache2/sites-available/ssl
 
 RUN echo "Generating certificates"
 
-ARG server_name
-ARG server_port
-
 COPY ./docker/openssl-san.cnf /usr/local/etc/php/conf.d/openssl-san.cnf
 
 # overwrite conf files of apache with our vhost.conf file
@@ -47,8 +44,6 @@ RUN mkdir -p /var/run/apache2/
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 # copy xdebug configuration to apache and update xdebug port specified in the argument (see docker-compose.yml)
-ARG xdebug_port=9045
-ARG xdebug_mode=develop,debug
 COPY ./docker/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY ./docker/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
 

@@ -45,13 +45,14 @@ if [ ! -f "$FLAG_FILE" ]; then
   cp ".env.example" "/var/www/html/server/.env"
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/server/.env
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/server/.env
+  sed -i "s/((client_port))/${client_port}/g" /var/www/html/server/.env
 
   # create application identity and set it to support credentials
   php artisan key:generate
-  sed -i "s/'supports_credentials' => false,/'supports_credentials' => true,/g" /var/www/html/server/config/cors.php
 
   # publish CORS
   php artisan config:publish cors
+  sed -i "s/'supports_credentials' => false,/'supports_credentials' => true,/g" /var/www/html/server/config/cors.php
 
 # create storage link
   php artisan storage:link
@@ -76,8 +77,11 @@ if [ ! -f "$FLAG_FILE" ]; then
   
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.development
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.development
+  sed -i "s/((client_port))/${client_port}/g" /var/www/html/client/.env.development
+
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.production
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.production
+  sed -i "s/((client_port))/${client_port}/g" /var/www/html/client/.env.production
 
   # Step 1: Run Vite in the background
   yarn dev &

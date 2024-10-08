@@ -20,7 +20,7 @@ services:
     ports:
       - "${SERVER_PORT}:443"
       - "${XDEBUG_PORT}:${XDEBUG_PORT}"
-      - 3000:3000
+      - ${CLIENT_PORT}:${CLIENT_PORT}
     volumes:
       - ./certs:/var/www/certs
       - ../.vscode:/.vscode
