@@ -28,15 +28,12 @@ if [ ! -f "$FLAG_FILE" ]; then
   sed -i "s/((server_name))/${server_name}/g" /etc/apache2/sites-available/000-default.conf
   sed -i "s/((server_name))/${server_name}/g" /etc/apache2/sites-available/default-ssl.conf
 
-  #restart Apache for the certificates to take effect
-   /etc/init.d/apache2 reload
-
   # Set the ServerName globally to avoid build warning
   echo "ServerName ${server_name}" >> /etc/apache2/apache2.conf
 
   #clone the project
   git clone -b main ${github_link} /var/www/html
-
+  
   cd /var/www/html/server
 
   composer install
