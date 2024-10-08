@@ -10,6 +10,9 @@ if [ ! -f "$FLAG_FILE" ]; then
 
   sed -i "s/((server_name))/${server_name}/g" /usr/local/etc/php/conf.d/openssl-san.cnf
 
+  sed -i "s/((xdebug_port))/${xdebug_port}/g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+  sed -i "s/((xdebug_mode))/${xdebug_mode}/g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
   openssl req \
       -config /usr/local/etc/php/conf.d/openssl-san.cnf \
       -new \
@@ -43,8 +46,12 @@ if [ ! -f "$FLAG_FILE" ]; then
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/server/.env
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/server/.env
 
-  # create application identity
+  # create application identity and set it to support credentials
   php artisan key:generate
+  sed -i "s/'supports_credentials' => false,/'supports_credentials' => true,/g" /var/www/html/server/config/cors.php
+
+  # publish CORS
+  php artisan config:publish cors
 
 # create storage link
   php artisan storage:link
@@ -65,7 +72,7 @@ if [ ! -f "$FLAG_FILE" ]; then
   cd /var/www/html/client
   yarn
 
-  sed -i "s/host: true/host: '${server_name}'/g" /var/www/html/client/vite.config.mts
+  # sed -i "s/host: true/host: '${server_name}'/g" /var/www/html/client/vite.config.mts
   
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.development
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.development

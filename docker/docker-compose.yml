@@ -15,6 +15,7 @@ services:
       - APACHE_LOG_DIR=/app
       - TZ=Asia/Karachi
       - server_name=${SERVER_NAME}
+      - server_port=${SERVER_PORT}
       - github_link=${GITHUB_LINK}
     ports:
       - "${SERVER_PORT}:443"
@@ -22,3 +23,4 @@ services:
       - 3000:3000
     volumes:
       - ./certs:/var/www/certs
+      - ../.vscode:/.vscode

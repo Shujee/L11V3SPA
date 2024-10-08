@@ -51,8 +51,6 @@ ARG xdebug_port=9045
 ARG xdebug_mode=develop,debug
 COPY ./docker/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY ./docker/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
-RUN sed -i "s/((xdebug_port))/${xdebug_port}/g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN sed -i "s/((xdebug_mode))/${xdebug_mode}/g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 SHELL ["/bin/bash", "-c"]
 
