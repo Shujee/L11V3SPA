@@ -14,7 +14,7 @@ RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
     git \
     libfreetype6-dev libjpeg62-turbo-dev libpng-dev libzip-dev \
-    zip unzip lsof \
+    zip unzip lsof sqlite3 \
     libc6 libstdc++6 libgcc1 ca-certificates wget libfontconfig1 fonts-liberation libpango-1.0-0 libpangocairo-1.0-0 && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install gd && \
