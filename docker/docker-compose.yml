@@ -5,17 +5,12 @@ services:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
-      args:
-        xdebug_port: ${XDEBUG_PORT}
-        xdebug_mode: develop,debug
-        github_link: ${GITHUB_LINK}
-        server_name: ${SERVER_NAME}
-        server_port: ${SERVER_PORT}
     environment:
       - APACHE_LOG_DIR=/app
       - TZ=Asia/Karachi
       - server_name=${SERVER_NAME}
       - server_port=${SERVER_PORT}
+      - client_port=${CLIENT_PORT}
       - github_link=${GITHUB_LINK}
     ports:
       - "${SERVER_PORT}:443"
