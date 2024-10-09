@@ -12,9 +12,9 @@ services:
       - server_port=${SERVER_PORT}
       - client_port=${CLIENT_PORT}
       - github_link=${GITHUB_LINK}
+      - xdebug_port=${XDEBUG_PORT}
     ports:
       - "${SERVER_PORT}:443"
-      - "${XDEBUG_PORT}:${XDEBUG_PORT}"
       - ${CLIENT_PORT}:${CLIENT_PORT}
     volumes:
       - ./certs:/var/www/certs

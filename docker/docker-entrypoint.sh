@@ -13,6 +13,8 @@ if [ ! -f "$FLAG_FILE" ]; then
   sed -i "s/((xdebug_port))/${xdebug_port}/g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
   sed -i "s/((xdebug_mode))/${xdebug_mode}/g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+  sed -i "s/((xdebug_port))/${xdebug_port}/g" /.vscode/launch.json
+
   openssl req \
       -config /usr/local/etc/php/conf.d/openssl-san.cnf \
       -new \

@@ -17,8 +17,8 @@ of managing the cookie and refreshing it automatically.
     1.  PowerShell: `Import-Certificate -FilePath "<CRT File Path Here>" -CertStoreLocation Cert:\LocalMachine\Root`
     2.  CMD: `certutil -addstore "Root" "<CRT File Path Here>"`
     3.  In case you want to replace an existing certificate with the new one: run this first: `certutil -delstore "Root" "<common_name>"`
-    4.  Note: These certificates can sometimes take 30+ minutes to be recognized by the browser. You'll see INVALID_AUTHORITY or other similar errors in the browser if you try to access the servers during that time. This might be related to hwo SSL certificates are cached. I haven't found a fix for this problem yet.
-
+    4.  Note: These certificates can sometimes take 30+ minutes to be recognized by the browser. You'll see INVALID_AUTHORITY or other similar errors in the browser if you try to access the servers during that time. This might be related to hwo SSL certificates are cached. I haven't found a fix for this problem yet. Closing all tabs of the browser has occasionally fixed the problem.
 10. Add your local domain name to `%windir%\System32\drivers\etc\hosts` file.
 11. Open your server-domain in the browser and make sure the browser does not complain about the certificate. Note that sometimes it can take considerable time for the certificates to be validated by the browser. Clearing browser cache may help in those cases. I'm currently looking into this issue.
 12. From Docker extension in VSCode, right-click your running container and choose `Attach Visual Studio Code` command to work directly with the container source. This will save your Host machine from getting polluted with `node_modules` and `vendor` folders.
+13. `launch.json` already contains debugging configuration for both Laravel server and Vite client, plus Browser launching. You can simply select `Compound` configuration to launch all of them. Breakpoints will work in Vue components as well as PHP code.
