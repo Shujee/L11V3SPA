@@ -8,7 +8,7 @@ of managing the cookie and refreshing it automatically.
    * Use GitHub Import feature to create a detached copy and then clone it to your host machine.
 2. Make sure you have Docker installed on your machine. If you're using Visual Studio Code, it is nice to have Docker extension installed.
 3. Open detached cloned repo in VSCode.
-4. Open `/docker/.env` file in the editor and update Docker variables such as the port number you want your Laravel server to run on.
+4. Duplicate `/docker/.env.example` file and name the new file `.env`. Open it in the editor and update Docker variables such as the port number you want your Laravel server to run on.
 5. Open `docker-compose.yml` and set the image name (on line 2) to whatever you want.
 6. Open Terminal and go to `docker` subfolder.
 7. Run `docker compose build` to create image.
