@@ -15,15 +15,15 @@
 </template>
 
 <script setup lang="ts">
-  withDefaults(defineProps<{
-    icon: string
-    tooltip?: string
-    classes?: string
-    color?: string
-  }>(), {
-    classes: 'me-2',
-    tooltip: '',
-  })
+withDefaults(defineProps<{
+  icon: string
+  tooltip?: string
+  classes?: string
+  color?: string
+}>(), {
+  classes: 'me-2',
+  tooltip: '',
+})
 
-  const emit = defineEmits(['click'])
+const emit = defineEmits(['click'])
 </script>

@@ -15,38 +15,38 @@
 
 <script lang="ts" setup>
 
-  defineProps<{
-    title: string,
-    message: string,
-    confirmText: string,
-    cancelText: string,
-  }>()
+defineProps<{
+  title: string,
+  message: string,
+  confirmText: string,
+  cancelText: string,
+}>()
 
-  let resolvePromise : (value: unknown) => void
-  const show = ref<boolean>(false)
+let resolvePromise : (value: unknown) => void
+const show = ref<boolean>(false)
 
-  const open = async () => {
-    show.value = true
-    return new Promise(resolve => {
-      resolvePromise = resolve
-    })
-  }
-
-  defineExpose({
-    open,
+const open = async () => {
+  show.value = true
+  return new Promise(resolve => {
+    resolvePromise = resolve
   })
+}
 
-  const confirm = () => {
-    show.value = false
-    if (resolvePromise != null) {
-      resolvePromise(true)
-    }
-  }
+defineExpose({
+  open,
+})
 
-  const cancel = () => {
-    show.value = false
-    if (resolvePromise != null) {
-      resolvePromise(false)
-    }
+const confirm = () => {
+  show.value = false
+  if (resolvePromise != null) {
+    resolvePromise(true)
   }
+}
+
+const cancel = () => {
+  show.value = false
+  if (resolvePromise != null) {
+    resolvePromise(false)
+  }
+}
 </script>

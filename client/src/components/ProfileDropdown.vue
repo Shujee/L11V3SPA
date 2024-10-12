@@ -31,25 +31,25 @@
 </template>
 
 <script lang="ts" setup>
-  import useRequestHandler from '@/composables/useRequestHandler'
-  import { useRouter } from 'vue-router'
-  import { showSnackKey, snackTextKey } from '@/InjectionKeys'
-  import { inject, ref } from 'vue'
-  import { useAppStore } from '@/stores/app'
-  import { User } from '@/composables/types'
+import useRequestHandler from '@/composables/useRequestHandler'
+import { useRouter } from 'vue-router'
+import { showSnackKey, snackTextKey } from '@/InjectionKeys'
+import { inject, ref } from 'vue'
+import { useAppStore } from '@/stores/app'
+import { User } from '@/composables/types'
 
-  const showSnack = inject(showSnackKey, ref<boolean>(false))
-  const snackText = inject(snackTextKey, ref<string>(''))
+const showSnack = inject(showSnackKey, ref<boolean>(false))
+const snackText = inject(snackTextKey, ref<string>(''))
 
-  const store = useAppStore()
-  const router = useRouter()
-  const menu = ref<boolean>(false)
+const store = useAppStore()
+const router = useRouter()
+const menu = ref<boolean>(false)
 
-  const logout = async () => {
-    const req = useRequestHandler(showSnack, snackText)
+const logout = async () => {
+  const req = useRequestHandler(showSnack, snackText)
 
-    await req.post('logout')
-    store.user = {} as User
-    router.push('/login')
-  }
+  await req.post('logout')
+  store.user = {} as User
+  router.push('/login')
+}
 </script>

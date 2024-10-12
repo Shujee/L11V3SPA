@@ -120,25 +120,25 @@ export default function (showSnack?: Ref<boolean>, snackText?: Ref<string>) {
 function showError (error: AxiosError, showSnack?: Ref<boolean>, snackText?: Ref<string>) {
   if (showSnack && snackText) {
     switch (error?.response?.status) {
-      case HttpStatusCode.Unauthorized:
-        showSnack.value = true
-        snackText.value = 'You are not authorized to perform this action.'
-        break
+    case HttpStatusCode.Unauthorized:
+      showSnack.value = true
+      snackText.value = 'You are not authorized to perform this action.'
+      break
 
-      case HttpStatusCode.InternalServerError:
-        showSnack.value = true
-        snackText.value = 'Unexpected error occurred on the server.'
-        break
+    case HttpStatusCode.InternalServerError:
+      showSnack.value = true
+      snackText.value = 'Unexpected error occurred on the server.'
+      break
 
-      case HttpStatusCode.UnprocessableEntity:
-        showSnack.value = true
-        snackText.value = (error as AxiosErrorEx)?.response.data?.message
-        break
+    case HttpStatusCode.UnprocessableEntity:
+      showSnack.value = true
+      snackText.value = (error as AxiosErrorEx)?.response.data?.message
+      break
 
-      default:
-        showSnack.value = true
-        snackText.value = JSON.stringify(error + ' here')
-        break
+    default:
+      showSnack.value = true
+      snackText.value = JSON.stringify(error + ' here')
+      break
     }
   }
 }

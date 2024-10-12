@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { useAppStore } from '@/stores/app'
+import { useAppStore } from '@/stores/app'
 
-  const store = useAppStore()
+const store = useAppStore()
 </script>

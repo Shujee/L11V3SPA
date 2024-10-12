@@ -22,51 +22,51 @@
   </v-dialog>
 </template>
 <script lang="ts" setup>
-  import { ref, watch } from 'vue'
-  import { useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
-  const showSnack = ref<boolean>(false)
-  const snackText = ref<string>('')
-  const form = ref<HTMLFormElement>()
+const showSnack = ref<boolean>(false)
+const snackText = ref<string>('')
+const form = ref<HTMLFormElement>()
 
-  const router = useRouter()
+const router = useRouter()
 
-  const defaults = ref({
-    VTextField: {
-      variant: 'outlined',
-    },
-    VSelect: {
-      variant: 'outlined',
-    },
-  })
+const defaults = ref({
+  VTextField: {
+    variant: 'outlined',
+  },
+  VSelect: {
+    variant: 'outlined',
+  },
+})
 
-  const props = defineProps<{
-    title: string
-    icon?: string
-    fullscreen?: boolean
-    hideActions?: boolean
-  }>()
+const props = defineProps<{
+  title: string
+  icon?: string
+  fullscreen?: boolean
+  hideActions?: boolean
+}>()
 
-  const show = defineModel<boolean>({
-    default: true,
-  })
+const show = defineModel<boolean>({
+  default: true,
+})
 
-  const emit = defineEmits(['ok', 'cancel'])
+const emit = defineEmits(['ok', 'cancel'])
 
-  watch(show, newValue => {
-    if (!newValue && router.currentRoute.value.matched.length > 1) { router.push(router.currentRoute.value.matched[router.currentRoute.value.matched.length - 2]) }
-  })
+watch(show, newValue => {
+  if (!newValue && router.currentRoute.value.matched.length > 1) { router.push(router.currentRoute.value.matched[router.currentRoute.value.matched.length - 2]) }
+})
 
-  const validate = async () => {
-    if (form.value) {
-      const { valid, errors } = await form.value.validate()
+const validate = async () => {
+  if (form.value) {
+    const { valid, errors } = await form.value.validate()
 
-      if (!valid) {
-        snackText.value = errors[0].errorMessages[0]
-        showSnack.value = true
-      } else {
-        emit('ok')
-      }
+    if (!valid) {
+      snackText.value = errors[0].errorMessages[0]
+      showSnack.value = true
+    } else {
+      emit('ok')
     }
   }
+}
 </script>

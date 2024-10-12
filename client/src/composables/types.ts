@@ -1,95 +1,95 @@
 interface Link {
-   active: boolean
-   label: string
-   url: string
+  active: boolean
+  label: string
+  url: string
 }
 
 interface PagedResponse<T> {
-   data: T[]
-   meta: {
-      from: number
-      to: number
-      total: number
-      current_page: number
-      last_page: number
-      per_page: number
-      path: string
-      links: Link[]
-   }
-   links: {
-      first: string
-      last: string
-      prev: string
-      next: string
-   }
+  data: T[]
+  meta: {
+    from: number
+    to: number
+    total: number
+    current_page: number
+    last_page: number
+    per_page: number
+    path: string
+    links: Link[]
+  }
+  links: {
+    first: string
+    last: string
+    prev: string
+    next: string
+  }
 }
 
 interface ResourceResponse<T> {
-   data: T
+  data: T
 }
 
 type UserRole = 'Admin'
 
 interface User {
-   id: number
-   name: string
-   email: string
-   role: UserRole
+  id: number
+  name: string
+  email: string
+  role: UserRole
 }
 
-type ValidationField = 'name' | 'password' | 'email' | 'user_id'
+type ValidationField = 'email' | 'name' | 'password' | 'user_id'
 
 interface AxiosErrorEx {
-   response: {
-      data: {
-         message: string,
-         errors: Record<ValidationField, string[]>
-      }
-   }
+  response: {
+    data: {
+      message: string,
+      errors: Record<ValidationField, string[]>
+    }
+  }
 }
 interface PagingArgs {
-   page: number
-   itemsPerPage: number
-   sortBy?: string[]
+  page: number
+  itemsPerPage: number
+  sortBy?: string[]
 }
 
-type SelectItemKey = boolean | string | (string | number)[] | ((item: Record<string, any>, fallback?: any) => any)
+type SelectItemKey = (number | string)[] | boolean | string | ((item: Record<string, any>, fallback?: any) => any)
 type DataTableCompareFunction<T = any> = (a: T, b: T) => number
 type DataTableHeader = {
-   key: string
-   value?: SelectItemKey
-   title: string
-   colspan?: number
-   rowspan?: number
-   fixed?: boolean
-   align?: 'start' | 'end' | 'center'
-   width?: number
-   minWidth?: string
-   maxWidth?: string
-   sortable?: boolean
-   sort?: DataTableCompareFunction
+  key: string
+  value?: SelectItemKey
+  title: string
+  colspan?: number
+  rowspan?: number
+  fixed?: boolean
+  align?: 'center' | 'end' | 'start'
+  width?: number
+  minWidth?: string
+  maxWidth?: string
+  sortable?: boolean
+  sort?: DataTableCompareFunction
 }
 interface ConfirmDialogOptions {
-   color?: string
-   icon?: string
-   width?: number
-   zIndex?: number
-   showCancel?: boolean
-   okText?: string
-   cancelText?: string
-   okColor?: string
-   cancelColor?: string
+  color?: string
+  icon?: string
+  width?: number
+  zIndex?: number
+  showCancel?: boolean
+  okText?: string
+  cancelText?: string
+  okColor?: string
+  cancelColor?: string
 }
 interface ConfirmDialogArgs {
-   title?: string,
-   message: string,
-   type: 'string' | 'validation',
-   errors: Record<string, string[]>,
-   options?: ConfirmDialogOptions,
+  title?: string,
+  message: string,
+  type: 'string' | 'validation',
+  errors: Record<string, string[]>,
+  options?: ConfirmDialogOptions,
 }
 interface ValidationErrorResponse {
-   message: string,
-   errors: Record<string, string[]>
+  message: string,
+  errors: Record<string, string[]>
 }
 
 export type {
