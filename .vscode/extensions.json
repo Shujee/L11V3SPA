@@ -2,7 +2,6 @@
   "recommendations": [
     "pranaygp.vscode-css-peek",
    "dbaeumer.vscode-eslint",
-   "mhutchie.git-graph",
    "GitHub.vscode-pull-request-github", 
    "eamodio.gitlens", 
    "ecmel.vscode-html-css", 
