@@ -1,17 +1,21 @@
 <template>
   <v-responsive class="align-centerfill-height mx-auto" max-width="900">
-    <v-img class="my-8" height="150" src="@/assets/logo.png" />
-
-    <div class="text-center">
-      <h1 class="text-h1">L11V3-SPA</h1>
-      <v-chip class="mt-2" size="x-large">
-        <h3 class="text-h4 ma-2">Laravel API with Vuetify SPA</h3>
-      </v-chip>
-    </div>
+    <v-container>
+      <v-row />
+    </v-container>
   </v-responsive>
   <router-view name="dialog" />
 </template>
 
- <script setup lang="ts">
- //
- </script>
+<script setup lang="ts">
+// import { PagedResponse } from '@/composables/types'
+// import useRequestHandler from '@/composables/useRequestHandler'
+// import { showSnackKey, snackTextKey } from '@/InjectionKeys'
+
+// const showSnack = inject(showSnackKey, ref<boolean>(false))
+// const snackText = inject(snackTextKey, ref<string>(''))
+
+onBeforeMount(() => {
+  // use get function to fetch api data
+})
+</script>
