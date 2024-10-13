@@ -11,9 +11,8 @@ if [ ! -f "$FLAG_FILE" ]; then
   sed -i "s/((server_name))/${server_name}/g" /usr/local/etc/php/conf.d/openssl-san.cnf
 
   sed -i "s/((xdebug_port))/${xdebug_port}/g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-  sed -i "s/((xdebug_mode))/${xdebug_mode}/g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-
-  sed -i "s/((xdebug_port))/${server_name}/g" /.vscode/launch.json
+  
+  sed -i "s/((server_name))/${server_name}/g" /.vscode/launch.json
   sed -i "s/((xdebug_port))/${xdebug_port}/g" /.vscode/launch.json
 
   openssl req \
@@ -60,6 +59,9 @@ if [ ! -f "$FLAG_FILE" ]; then
 # create storage link
   php artisan storage:link
   chmod o+w ./storage/ -R
+
+  # own server/database folder because we'll be reading/writing sqlite file
+  chown -R www-data:www-data /var/www/html/server/database
 
   #update git before seeding
   git config --system --add safe.directory '/var/www/html'
