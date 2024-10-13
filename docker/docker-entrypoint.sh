@@ -13,6 +13,7 @@ if [ ! -f "$FLAG_FILE" ]; then
   sed -i "s/((xdebug_port))/${xdebug_port}/g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
   sed -i "s/((xdebug_mode))/${xdebug_mode}/g" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+  sed -i "s/((xdebug_port))/${server_name}/g" /.vscode/launch.json
   sed -i "s/((xdebug_port))/${xdebug_port}/g" /.vscode/launch.json
 
   openssl req \
@@ -29,6 +30,9 @@ if [ ! -f "$FLAG_FILE" ]; then
   # update server name variable in vhost file
   sed -i "s/((server_name))/${server_name}/g" /etc/apache2/sites-available/000-default.conf
   sed -i "s/((server_name))/${server_name}/g" /etc/apache2/sites-available/default-ssl.conf
+
+  # Add custom server name to /etc/hosts
+  echo "\n127.0.0.1   $server_name\n" >> /etc/hosts
 
   # Set the ServerName globally to avoid build warning
   echo "ServerName ${server_name}" >> /etc/apache2/apache2.conf
@@ -73,6 +77,7 @@ if [ ! -f "$FLAG_FILE" ]; then
   yarn
 
   sed -i "s/((client_port))/${client_port}/g" /var/www/html/client/vite.config.mts
+  sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/vite.config.mts
   
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.development
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.development
@@ -81,6 +86,10 @@ if [ ! -f "$FLAG_FILE" ]; then
   sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/.env.production
   sed -i "s/((server_port))/${server_port}/g" /var/www/html/client/.env.production
   sed -i "s/((client_port))/${client_port}/g" /var/www/html/client/.env.production
+
+  # update server name variable in Thunder Client collection and environment files
+  sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/thunder-collection.json
+  sed -i "s/((server_name))/${server_name}/g" /var/www/html/client/thunder-environment.json
 
   # Step 1: Run Vite in the background
   yarn dev &

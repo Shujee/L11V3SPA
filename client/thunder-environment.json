@@ -1,0 +1,14 @@
+{
+    "clientName": "Thunder Client",
+    "environmentName": "((server_name))",
+    "environmentId": "11f5daca-9c09-475f-ad9e-90655a40c0fd",
+    "dateExported": "2024-10-13T11:03:04.274Z",
+    "version": "1.2",
+    "variables": [
+        {
+            "name": "csrf_token",
+            "value": ""
+        }
+    ],
+    "ref": "NrG11VinImqxtlZcbISac8Dk0xDaHMc-oQYbGHGnJspgkb349ccWd808I86rOT4Z"
+}

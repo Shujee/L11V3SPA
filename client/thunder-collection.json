@@ -1,0 +1,155 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "((server_name))",
+    "collectionId": "f00deb37-1ac2-462b-896d-4141fc92d0b0",
+    "dateExported": "2024-10-12T15:21:29.689Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "373feffb-d2be-4beb-9582-51b7a620fc96",
+            "colId": "f00deb37-1ac2-462b-896d-4141fc92d0b0",
+            "containerId": "",
+            "name": "login",
+            "url": "login",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2024-08-11T16:08:31.948Z",
+            "modified": "2024-08-15T05:31:28.527Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"a@c.co\",\n  \"password\": \"password\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "bba81a19-ea37-4bb2-8fe1-3bd5be2a9df9",
+            "colId": "f00deb37-1ac2-462b-896d-4141fc92d0b0",
+            "containerId": "",
+            "name": "logout",
+            "url": "logout",
+            "method": "POST",
+            "sortNum": 7500,
+            "created": "2024-08-11T16:08:31.949Z",
+            "modified": "2024-08-11T16:08:31.949Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "tests": [],
+            "postReq": {
+                "inlineScripts": [
+                    {
+                        "script": [
+                            "tc.setVar('csrf_token', null)"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "42852600-27cf-40ba-bbd2-eecb118d8f58",
+            "colId": "f00deb37-1ac2-462b-896d-4141fc92d0b0",
+            "containerId": "",
+            "name": "CSRF-Cookie",
+            "url": "csrf-cookie",
+            "method": "GET",
+            "sortNum": 11250,
+            "created": "2024-08-11T16:08:31.950Z",
+            "modified": "2024-08-15T05:20:08.461Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*",
+                    "isDisabled": true
+                }
+            ],
+            "params": [
+                {
+                    "name": "cookie.xsrf-token|urlDecode",
+                    "value": "{{csrf_token}}",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.",
+                    "action": "setto",
+                    "value": "{{csrf_token}}"
+                }
+            ]
+        },
+        {
+            "_id": "d6796aa4-ec34-4bf2-99dc-a42b1c86916a",
+            "colId": "f00deb37-1ac2-462b-896d-4141fc92d0b0",
+            "containerId": "",
+            "name": "check",
+            "url": "check",
+            "method": "GET",
+            "sortNum": 21250,
+            "created": "2024-08-15T05:28:40.226Z",
+            "modified": "2024-08-15T07:45:31.261Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json",
+                    "isDisabled": true
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "headers": [
+            {
+                "name": "Accept",
+                "value": "application/json"
+            },
+            {
+                "name": "Content-Type",
+                "value": "application/json"
+            },
+            {
+                "name": "X-XSRF-TOKEN",
+                "value": "{{csrf_token | urlDecode}}"
+            },
+            {
+                "name": "Referer",
+                "value": "((server_name)):3000"
+            }
+        ],
+        "tests": [
+            {
+                "type": "set-env-var",
+                "custom": "cookie.xsrf-token",
+                "action": "setto",
+                "value": "{{csrf_token}}"
+            }
+        ],
+        "options": {
+            "baseUrl": "https://((server_name))/api/"
+        },
+        "envId": "11f5daca-9c09-475f-ad9e-90655a40c0fd"
+    },
+    "ref": "MOeqt4w0AM8oPWRkr-V6_UA0yHz-Q1J9ciLIB8yRmWFkjCLnugiraM0zagaHq0dD41jZv3aJ9Geffzl9LictLg"
+}

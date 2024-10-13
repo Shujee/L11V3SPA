@@ -14,7 +14,7 @@
          "name": "Edge Browser",
          "request": "launch",
          "type": "msedge",
-         "url": "https://localhost:3000/",
+         "url": "https://((server_name)):3000/",
          "webRoot": "${workspaceFolder}/client/src",
          "cwd": "${workspaceFolder}/client/src",
          "sourceMapPathOverrides": {

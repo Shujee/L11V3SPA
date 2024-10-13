@@ -19,7 +19,9 @@ dns.setDefaultResultOrder('verbatim')
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    mkcert(),
+    mkcert({
+      hosts: ['((server_name))'],
+    }),
     VueRouter({
       dts: 'src/typed-router.d.ts',
     }),

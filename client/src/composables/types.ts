@@ -1,3 +1,5 @@
+import { Dayjs } from 'dayjs'
+
 interface Link {
   active: boolean
   label: string
@@ -35,6 +37,7 @@ interface User {
   name: string
   email: string
   role: UserRole
+  created_at: Dayjs
 }
 
 type ValidationField = 'email' | 'name' | 'password' | 'user_id'

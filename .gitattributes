@@ -1,0 +1,20 @@
+# Set text files to be normalized to LF on commit and converted back to the correct OS-specific line ending on checkout
+* text=auto
+
+# Ensure all TypeScript definition files use LF (Unix-style line endings)
+*.d.ts text eol=lf
+
+# Optional: Force specific file types to always use LF line endings
+*.js text eol=lf
+*.ts text eol=lf
+*.vue text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+
+# Prevent binary files from being normalized
+*.png binary
+*.jpg binary
+*.gif binary
+*.pdf binary
