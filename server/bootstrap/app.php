@@ -12,7 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+      $middleware->statefulApi();
+
+      $middleware->alias([
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticatedExceptForAPI::class,
+      ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

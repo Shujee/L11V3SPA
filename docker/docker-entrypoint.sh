@@ -60,9 +60,6 @@ if [ ! -f "$FLAG_FILE" ]; then
   php artisan storage:link
   chmod o+w ./storage/ -R
 
-  # own server/database folder because we'll be reading/writing sqlite file
-  chown -R www-data:www-data /var/www/html/server/database
-
   #update git before seeding
   git config --system --add safe.directory '/var/www/html'
 
@@ -73,6 +70,9 @@ if [ ! -f "$FLAG_FILE" ]; then
   
   # Run Laravel migrations
   php artisan migrate --seed
+
+  # own server/database folder because we'll be reading/writing sqlite file
+  chown -R www-data:www-data /var/www/html/server/database
 
   # update node packages of the front-end project
   cd /var/www/html/client
