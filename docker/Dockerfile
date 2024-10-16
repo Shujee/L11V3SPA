@@ -12,11 +12,12 @@ COPY ./docker/opcache.ini /usr/local/etc/php/conf.d/20-opcache.ini
 # update packages and install git
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
+    libwebp-dev \
     git \
     libfreetype6-dev libjpeg62-turbo-dev libpng-dev libzip-dev \
     zip unzip lsof sqlite3 \
     libc6 libstdc++6 libgcc1 ca-certificates wget libfontconfig1 fonts-liberation libpango-1.0-0 libpangocairo-1.0-0 && \
-    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
     docker-php-ext-install gd && \
     docker-php-ext-configure opcache --enable-opcache && \
     docker-php-ext-install opcache && \
