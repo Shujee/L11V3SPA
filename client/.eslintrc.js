@@ -23,6 +23,14 @@ module.exports = {
     indent: ['warn', 2],
     'vue/script-indent': ['warn', 2],
     'vue/multi-word-component-names': 'off',
+    'vue/max-attributes-per-line': ['error', {
+      singleline: {
+        max: 8,
+      },
+      multiline: {
+        max: 5,
+      },
+    }],
   },
   overrides: [
     {
