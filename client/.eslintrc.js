@@ -36,9 +36,11 @@ module.exports = {
     {
       files: ['*.ts'], // Lint .ts and .vue files
       rules: {
-        indent: ['warn', 2], // Global indent rule
+        indent: ['warn', 2, { SwitchCase: 1 }], // Global indent rule
         'vue/script-indent': ['warn', 2], // Vue script block indent
-        '@typescript-eslint/indent': ['warn', 2, { SwitchCase: 0 }], // Enforce indent in .ts files
+        '@typescript-eslint/indent': ['warn', 2], // Enforce indent in .ts files
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': ['error'],
       },
     },
   ],
