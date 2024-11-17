@@ -69,6 +69,10 @@ RUN yarn --version
 # Here we are introducing a custom entry point to run Laravel migrations
 COPY ./docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# update web folder ownership one more time to make sure all subfolders are accessible to apache process
+RUN chown -R www-data:www-data /var/www/html
+
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/docker-entrypoint.sh"]
 
 # Start apache process
