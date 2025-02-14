@@ -59,8 +59,12 @@ RUN chown -R www-data:www-data /var/www/html && find /var/www/html -type d -exec
 RUN a2ensite default-ssl
 
 # install Node
-RUN apt-get update && apt-get install -y software-properties-common npm
-RUN npm install npm@latest -g && npm install n -g && n latest
+RUN apt-get update && apt-get install -y curl \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g npm@latest \
+    && npm install -g n \
+    && n latest
 
 # install Yarn
 RUN npm install --global yarn
