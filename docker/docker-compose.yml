@@ -1,5 +1,4 @@
-version: "3.9"
-name: l11v3spa
+name: compcenter3
 services:
   apache-php-8.3:
     build:
@@ -20,3 +19,42 @@ services:
     volumes:
       - ./certs:/var/www/certs
       - ../.vscode:/.vscode
+    depends_on:
+      mariadb:
+        condition: service_healthy
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
+      MARIADB_ROOT_PASSWORD:
+      MARIADB_DATABASE: cc3
+      MARIADB_USER: root
+      MARIADB_PASSWORD:
+    ports:
+      - "3313:3306"
+    restart: on-failure
+    healthcheck:
+       test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+       start_period: 15s
+       start_interval: 5s
+       interval: 1s
+       timeout: 15s
+       retries: 5
+  typesense:
+    image: typesense/typesense:27.1
+    restart: on-failure
+    volumes:
+      - ./typesense-data:/data
+    command: '--data-dir /data --api-key=xyz --enable-cors --enable-search-logging'
+  # typesense-dashboard:
+  #   image: bfritscher/typesense-dashboard:latest
+  #   ports:
+  #     - "21443:443"
+  #     - "2180:80"
+  #   environment:
+  #     - VUE_APP_TYPESENSE_PROTOCOL=http
+  #     - VUE_APP_TYPESENSE_API_KEY=xyz
+  #     - VUE_APP_TYPESENSE_HOST=http://typesense:8108
+  #     - VUE_APP_TYPESENSE_PORT=8108
+  #   depends_on:
+  #     - typesense
