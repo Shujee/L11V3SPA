@@ -1,57 +1,51 @@
 {
-   // Use IntelliSense to learn about possible attributes.
-   // Hover to view descriptions of existing attributes.
-   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-   "version": "0.2.0",
-   "configurations": [
-      {
-         "name": "XDebug",
-         "type": "php",
-         "request": "launch",
-         "port": ((xdebug_port))
-      },
-      {
-         "name": "Edge Browser",
-         "request": "launch",
-         "type": "msedge",
-         "url": "https://((server_name)):3000/",
-         "webRoot": "${workspaceFolder}/client/src",
-         "cwd": "${workspaceFolder}/client/src",
-         "sourceMapPathOverrides": {
-            "webpack:///./*": "${webRoot}/*",
-            "webpack:///src/*": "${webRoot}/*",
-            "webpack:///*": "*",
-            "webpack:///./~/*": "${webRoot}/node_modules/*",
-            "meteor://:computer:app/*": "${webRoot}/*",
-            "webpack:///./src/*": "${webRoot}/*",
-            "webpack:///./src/composables/*": "${webRoot}/composables/*",
-            "webpack:///./src/components/*": "${webRoot}/components/*",
-            "webpack:///./src/views/*": "${webRoot}/views/*",
-         }
-      },
-      {
-         "name": "Vite",
-         "request": "launch",
-         "runtimeArgs": [
-            "run-script",
-            "dev"
-         ],
-         "runtimeExecutable": "npm",
-         "cwd": "${workspaceFolder}/client",
-         "skipFiles": [
-            "<node_internals>/**"
-         ],
-         "type": "node"
-      },
-   ],
-   "compounds": [
-      {
-         "name": "Compound",
-         "configurations": [
-            "Vite",
-            "Edge Browser",
-            "XDebug",
-         ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "XDebug",
+      "type": "php",
+      "request": "launch",
+      "port": ((xdebug_port))
+    },
+    {
+      "name": "Edge Browser",
+      "request": "launch",
+      "type": "msedge",
+      "url": "https://((server_name)):((client_port))/",
+      "webRoot": "${workspaceFolder}/client/src",
+      "cwd": "${workspaceFolder}/client/src",
+      "sourceMapPathOverrides": {
+        "vite://src/*": "${webRoot}/src/*",
+        "/src/*": "${webRoot}/src/*",
+        "/*": "${webRoot}/*"
       }
-   ]
+    },
+    {
+      "name": "Vite",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "dev"
+      ],
+      "runtimeExecutable": "npm",
+      "cwd": "${workspaceFolder}/client",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+  ],
+  "compounds": [
+    {
+      "name": "Compound",
+      "configurations": [
+        "Vite",
+        "Edge Browser",
+        "XDebug",
+      ]
+    }
+  ]
 }

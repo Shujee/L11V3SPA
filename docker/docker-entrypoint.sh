@@ -14,6 +14,7 @@ if [ ! -f "$FLAG_FILE" ]; then
   
   sed -i "s/((server_name))/${server_name}/g" /.vscode/launch.json
   sed -i "s/((xdebug_port))/${xdebug_port}/g" /.vscode/launch.json
+  sed -i "s/((client_port))/${client_port}/g" /.vscode/launch.json
 
   openssl req \
       -config /usr/local/etc/php/conf.d/openssl-san.cnf \
