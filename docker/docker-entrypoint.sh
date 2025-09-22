@@ -132,6 +132,9 @@ if [ ! -f "$FLAG_FILE" ]; then
     # Sleep for a short interval before checking again
     sleep 2
   done
+
+  # Kill vite after certs are ready
+  kill "$VITE_PID"
   
   # Create the marker file to indicate first run is completed
   touch "$FLAG_FILE"

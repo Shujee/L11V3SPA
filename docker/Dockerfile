@@ -81,5 +81,3 @@ ENTRYPOINT ["/bin/bash", "/usr/local/bin/docker-entrypoint.sh"]
 
 # Start apache process
 CMD ["apache2-foreground"]
-
-SHELL ["/bin/bash", "-c"]
