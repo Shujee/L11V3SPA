@@ -117,5 +117,10 @@ export default defineConfig({
   server: {
     port: ((client_port)),
     host: true,
+    hmr: {
+      host: '((server_name))', // 👈 must match your browser URL
+      protocol: 'wss',
+      port: ((client_port))
+    }
   },
 })
