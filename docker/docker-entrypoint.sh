@@ -64,9 +64,11 @@ if [ ! -f "$FLAG_FILE" ]; then
   #update git before seeding
   git config --system --add safe.directory '/var/www/html'
 
-  mkdir /var/www/certs
-  cp /etc/apache2/sites-available/ssl/server.crt /var/www/certs/server.$(date +%s).crt
-
+  # mkdir /var/www/certs
+  CERT_NAME="server.$(date +%s).crt"
+  cp /etc/apache2/sites-available/ssl/server.crt /var/www/certs/$CERT_NAME
+  echo 'certutil -addstore "Root" "'$CERT_NAME'"' > /var/www/certs/install.bat
+  
   cd /var/www/html/server
   
   # Run Laravel migrations
@@ -125,7 +127,8 @@ if [ ! -f "$FLAG_FILE" ]; then
       #copy Vite certificate to host machine
       cp /root/.vite-plugin-mkcert/rootCA.pem /var/www/certs/rootCA.crt
       echo "and copied!"
-
+      
+      echo 'certutil -addstore "Root" "rootCA.crt"' >> /var/www/certs/install.bat
       break
     fi
 

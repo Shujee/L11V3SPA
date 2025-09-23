@@ -21,10 +21,37 @@
       "server": "mariadb",
       "port": 3306,
       "driver": "MariaDB",
-      "name": "ClassClock",
+      "name": "<CONNECTION_NAME>",
       "database": "class_clock",
       "username": "root",
       "password": ""
     }
   ],
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [],
+      "icon": "terminal-cmd"
+    },
+    "Git Bash": {
+      "source": "Git Bash"
+    },
+    "Command Prompt (Admin)": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [
+        "/k",
+        "powershell -NoProfile -Command Start-Process cmd -Verb runAs -ArgumentList '/k','cd /d \"${workspaceFolder}\\docker\\certs\"'"
+      ]
+    }
+  }
 }
