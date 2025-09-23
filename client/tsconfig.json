@@ -8,7 +8,8 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "~icons/*": ["./node_modules/.vite/deps/unplugin-icons/*"],
     },
     "resolveJsonModule": true,
     "types": [
@@ -17,6 +18,7 @@
       "unplugin-vue-router/client",
       "node",
       "vuetify",
+      "unplugin-icons/types/vue",
     ],
     "allowJs": true,
     "strict": true,
