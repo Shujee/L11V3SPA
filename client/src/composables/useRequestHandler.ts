@@ -1,46 +1,57 @@
-import { ref, Ref } from 'vue'
-import { AxiosError, AxiosResponse, HttpStatusCode } from 'axios'
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosErrorEx } from '@/composables/types'
-import useLaravelAxios from '@/composables/useLaravelAxios'
+import { AxiosError, AxiosRequestConfig, AxiosResponse, HttpStatusCode } from 'axios'
+import useLaravelAxios from './useLaravelAxios'
 
 const loading = ref<boolean>(false)
 
 const ax = useLaravelAxios()
 
-export default function (showSnack?: Ref<boolean>, snackText?: Ref<string>) {
+const token = localStorage.getItem('access_token')
+if (token)
+  ax.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+export default function (showSnackMessage: (text: string, color: string) => void, hideSnackMessage: () => void) {
   return {
     loading,
-    get: async <T>(url: string, params?: any): Promise<T | null> => {
+
+    setBearerToken: (token: string) => {
+      if (token) {
+        ax.defaults.headers.common.Authorization = `Bearer ${token}`;
+      } else {
+        delete ax.defaults.headers.common.Authorization;
+      }
+    },
+
+    get: async <T>(url: string, query?: any): Promise<T | null> => {
       loading.value = true
       try {
-        if (showSnack && snackText) {
-          showSnack.value = false
-          snackText.value = ''
-        }
+        hideSnackMessage()
 
         const res = await ax.get<T>(url, {
-          params,
+          params: query,
         })
         return res.data
       } catch (err) {
-        showError(err as AxiosError, showSnack, snackText)
+        showError(err as AxiosError, showSnackMessage)
         return null
       } finally {
         loading.value = false
       }
     },
 
-    post: async <T>(url: string, data?: any, headers?: any): Promise<T | null> => {
+    post: async <T>(url: string, data?: any, headers?: any, query?: any): Promise<T | null> => {
       loading.value = true
       try {
-        if (showSnack && snackText) {
-          showSnack.value = false
-          snackText.value = ''
-        }
+        hideSnackMessage()
 
         let res = null as AxiosResponse<T> | null
-        if (headers) res = await ax.post<T>(url, data, headers)
-        else res = await ax.post<T>(url, data)
+        if (headers || query) {
+          res = await ax.post<T>(url, data, {
+            params: query,
+            headers,
+          } as AxiosRequestConfig)
+        } else res = await ax.post<T>(url, data)
 
         if (
           res.status === HttpStatusCode.Ok ||
@@ -49,41 +60,37 @@ export default function (showSnack?: Ref<boolean>, snackText?: Ref<string>) {
         ) {
           return res.data
         } else {
-          if (showSnack && snackText) {
-            snackText.value = 'Request did not succeed.'
-            showSnack.value = true
-          }
-
+          showSnackMessage('Request did not succeed.', 'error')
           return null
         }
       } catch (err) {
-        showError(err as AxiosError, showSnack, snackText)
+        showError(err as AxiosError, showSnackMessage)
         return null
       } finally {
         loading.value = false
       }
     },
 
-    put: async <T>(url: string, data: any): Promise<T | null> => {
+    put: async <T>(url: string, data: any, headers?: any, query?: any): Promise<T | null> => {
       loading.value = true
       try {
-        if (showSnack && snackText) {
-          showSnack.value = false
-          snackText.value = ''
-        }
+        hideSnackMessage()
 
-        const res = await ax.put<T>(url, data)
+        let res = null as AxiosResponse<T> | null
+        if (headers || query) {
+          res = await ax.put<T>(url, data, {
+            params: query,
+            headers,
+          } as AxiosRequestConfig)
+        } else res = await ax.put<T>(url, data)
+
         if (res.status === HttpStatusCode.Ok) return res.data
         else {
-          if (showSnack && snackText) {
-            snackText.value = 'Request did not succeed.'
-            showSnack.value = true
-          }
-
+          showSnackMessage('Request did not succeed.', 'error')
           return null
         }
       } catch (err) {
-        showError(err as AxiosError, showSnack, snackText)
+        showError(err as AxiosError, showSnackMessage)
         return null
       } finally {
         loading.value = false
@@ -93,22 +100,16 @@ export default function (showSnack?: Ref<boolean>, snackText?: Ref<string>) {
     del: async <T>(url: string): Promise<T | null> => {
       loading.value = true
       try {
-        if (showSnack && snackText) {
-          showSnack.value = false
-          snackText.value = ''
-        }
+        hideSnackMessage()
 
         const res = await ax.delete<T>(url)
         if (res.status === HttpStatusCode.Ok) return res.data
         else {
-          if (showSnack && snackText) {
-            snackText.value = 'Request did not succeed.'
-            showSnack.value = true
-          }
+          showSnackMessage('Request did not succeed.', 'error')
           return null
         }
       } catch (err) {
-        showError(err as AxiosError, showSnack, snackText)
+        showError(err as AxiosError, showSnackMessage)
         return null
       } finally {
         loading.value = false
@@ -117,28 +118,39 @@ export default function (showSnack?: Ref<boolean>, snackText?: Ref<string>) {
   }
 }
 
-function showError (error: AxiosError, showSnack?: Ref<boolean>, snackText?: Ref<string>) {
-  if (showSnack && snackText) {
-    switch (error?.response?.status) {
+function showError (error: AxiosError, showSnackMessage: (text: string, color: string) => void) {
+  switch (error?.response?.status) {
     case HttpStatusCode.Unauthorized:
-      showSnack.value = true
-      snackText.value = 'You are not authorized to perform this action.'
+      showSnackMessage('You are not authorized to perform this action.', 'error')
       break
 
     case HttpStatusCode.InternalServerError:
-      showSnack.value = true
-      snackText.value = 'Unexpected error occurred on the server.'
+      if (instanceOfAxiosErrorEx(error.response.data)) {
+        showSnackMessage((error as AxiosErrorEx).response.data.message, 'error')
+      } else {
+        showSnackMessage('An error occurred on the server.', 'error')
+      }
       break
 
     case HttpStatusCode.UnprocessableEntity:
-      showSnack.value = true
-      snackText.value = (error as AxiosErrorEx)?.response.data?.message
+      const errors = (error as AxiosErrorEx)?.response.data?.errors
+      let errorMsg = ''
+      if (Array.isArray(errors)) {
+        errorMsg = errors.join('<br>')
+      } else if (typeof errors === 'object' && errors !== null) {
+        errorMsg = Object.values(errors).flat().join('<br>')
+      } else {
+        errorMsg = String(errors)
+      }
+      showSnackMessage(errorMsg, 'error')
       break
 
     default:
-      showSnack.value = true
-      snackText.value = JSON.stringify(error + ' here')
+      showSnackMessage(JSON.stringify('Connectivity error: ' + error), 'error')
       break
-    }
   }
+}
+
+function instanceOfAxiosErrorEx (object: any): object is AxiosErrorEx {
+  return 'message' in object
 }

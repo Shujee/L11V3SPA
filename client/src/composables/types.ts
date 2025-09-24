@@ -26,6 +26,14 @@ interface PagedResponse<T> {
   }
 }
 
+interface IRequestHandler {
+  loading: Ref<boolean>
+  get: <T>(url: string, params?: any) => Promise<T | null>
+  post: <T>(url: string, data?: any, headers?: any) => Promise<T | null>
+  put: <T>(url: string, data: any) => Promise<T | null>
+  del: <T>(url: string) => Promise<T | null>
+}
+
 interface ResourceResponse<T> {
   data: T
 }
@@ -96,6 +104,7 @@ interface ValidationErrorResponse {
 }
 
 export type {
+  IRequestHandler,
   User,
   PagedResponse,
   ResourceResponse,
