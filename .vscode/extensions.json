@@ -25,5 +25,7 @@
    "vuetifyjs.vuetify-vscode",
    "echoapi.echoapi-for-vscode",
    "mtxr.sqltools-driver-mysql",
+   "gamunu.vscode-yarn",
+   "esbenp.prettier-vscode",
   ]
 }

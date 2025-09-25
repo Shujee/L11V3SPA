@@ -1,10 +1,10 @@
 {
-  "editor.tabSize": 2,
-  "editor.detectIndentation": false,
-  "artisan.location": "/var/www/html/server/artisan",
   "php.validate.executablePath": "/usr/local/bin/php",
   "php.validate.enable": false,
   "eslint.run": "onSave",
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.fixAll.ts": "always",

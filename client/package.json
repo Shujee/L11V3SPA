@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix --ignore-path .gitignore"
+    "lint": "eslint . --fix"
   },
   "dependencies": {
     "roboto-fontface": "*",
@@ -26,7 +26,8 @@
   },
   "devDependencies": {
     "@babel/types": "^7.24.7",
-	"@faker-js/faker": "^10.0.0",
+    "@eslint/js": "^9.36.0",
+	  "@faker-js/faker": "^10.0.0",
     "@iconify-json/mdi": "^1.2.3",
     "@types/node": "^22.5.1",
     "@vitejs/plugin-vue": "^5.0.5",
@@ -35,10 +36,12 @@
     "eslint-config-vuetify": "^4.0.0",
     "eslint-plugin-promise": "^6.4.0",
     "eslint-plugin-vue": "^10.4.0",
+    "prettier": "^3.6.2",
     "pinia": "^2.1.7",
-	"rollup-plugin-visualizer": "^6.0.3",
+	  "rollup-plugin-visualizer": "^6.0.3",
     "sass": "1.77.8",
     "typescript": "^5.4.2",
+    "typescript-eslint": "^8.44.1",
     "unplugin-auto-import": "^0.18.2",
     "unplugin-fonts": "^1.1.1",
     "unplugin-icons": "^22.1.0",
