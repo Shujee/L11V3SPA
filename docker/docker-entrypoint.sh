@@ -76,6 +76,10 @@ if [ ! -f "$FLAG_FILE" ]; then
 
   # own server/database folder because we'll be reading/writing sqlite file
   chown -R www-data:www-data /var/www/html/server/database
+  chmod -R 775 /var/www/html/server/database
+  
+  chown -R www-data:www-data storage bootstrap/cache
+  chmod -R 775 storage bootstrap/cache
 
   # update node packages of the front-end project
   cd /var/www/html/client
