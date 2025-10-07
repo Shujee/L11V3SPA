@@ -59,7 +59,6 @@ if [ ! -f "$FLAG_FILE" ]; then
 
 # create storage link
   php artisan storage:link
-  chmod o+w ./storage/ -R
 
   #update git before seeding
   git config --system --add safe.directory '/var/www/html'
@@ -74,12 +73,10 @@ if [ ! -f "$FLAG_FILE" ]; then
   # Run Laravel migrations
   php artisan migrate --seed
 
+  #own storage folder or else no error logs (or any other files) will be written to it
   # own server/database folder because we'll be reading/writing sqlite file
-  chown -R www-data:www-data /var/www/html/server/database
-  chmod -R 775 /var/www/html/server/database
-  
-  chown -R www-data:www-data storage bootstrap/cache
-  chmod -R 775 storage bootstrap/cache
+  chown -R www-data:www-data storage bootstrap/cache /var/www/html/server/database
+  chmod -R 775 storage bootstrap/cache /var/www/html/server/database
 
   # update node packages of the front-end project
   cd /var/www/html/client
