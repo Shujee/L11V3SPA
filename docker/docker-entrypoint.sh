@@ -77,6 +77,7 @@ if [ ! -f "$FLAG_FILE" ]; then
   # own server/database folder because we'll be reading/writing sqlite file
   chown -R www-data:www-data storage bootstrap/cache /var/www/html/server/database
   chmod -R 775 storage bootstrap/cache /var/www/html/server/database
+  chmod +x vendor/bin/phpunit
 
   # update node packages of the front-end project
   cd /var/www/html/client
